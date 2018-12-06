@@ -1,0 +1,307 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title">Balance</div>
+        <div class="right">
+          <p>Wallet  <b class="dollar">{{balance}} $</b></p>
+
+             
+        </div>
+      </div>
+
+
+    </div>
+    <div class="page-content">
+
+       
+
+
+        
+        <div class="row">
+                    
+           <div class="col-20"></div>
+                            
+                            <div class="col-20">
+                          <p>Wallet<b class="dollar">{{balance}}$</b></p>
+                          <br>
+                          <hr>
+                          <p>Money earned  <b class="dollar">{{moneyearned}}$</b></p>
+                        
+
+
+              <div class="block block-strong">
+
+                   <div class="block-title">My BlockChain</div>
+
+                  
+                      <a href="#" class="button button-raised" @click="openAlert">Update</a>
+                    </div>
+                  
+
+
+                                          </div>
+                                       
+                         <div class="col-20">  </div>
+
+         </div>
+
+        <div class="row"> 
+
+          <div class="col-50">
+            <div class="block block-strong">My last superchange </div>
+     <div class="card data-table">
+  <table>
+    <thead>
+      <tr>
+        <th class="label-cell">Dessert (100g serving)</th>
+        <th class="numeric-cell">Calories</th>
+        <th class="numeric-cell">Fat (g)</th>
+        <th class="numeric-cell">Carbs</th>
+        <th class="numeric-cell">Protein (g)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="label-cell">Frozen yogurt</td>
+        <td class="numeric-cell">159</td>
+        <td class="numeric-cell">6.0</td>
+        <td class="numeric-cell">24</td>
+        <td class="numeric-cell">4.0</td>
+      </tr>
+       <tr>
+        <td class="label-cell">Frozen yogurt</td>
+        <td class="numeric-cell">159</td>
+        <td class="numeric-cell">6.0</td>
+        <td class="numeric-cell">24</td>
+        <td class="numeric-cell">4.0</td>
+      </tr>
+       <tr>
+        <td class="label-cell">Frozen yogurt</td>
+        <td class="numeric-cell">159</td>
+        <td class="numeric-cell">6.0</td>
+        <td class="numeric-cell">24</td>
+        <td class="numeric-cell">4.0</td>
+      </tr>
+       <tr>
+        <td class="label-cell">Frozen yogurt</td>
+        <td class="numeric-cell">159</td>
+        <td class="numeric-cell">6.0</td>
+        <td class="numeric-cell">24</td>
+        <td class="numeric-cell">4.0</td>
+      </tr>
+       <tr>
+        <td class="label-cell">Frozen yogurt</td>
+        <td class="numeric-cell">159</td>
+        <td class="numeric-cell">6.0</td>
+        <td class="numeric-cell">24</td>
+        <td class="numeric-cell">4.0</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="data-table-footer">
+    <div class="data-table-rows-select">
+      Per page:
+      <div class="input input-dropdown">
+        <select>
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="all">All</option>
+        </select>
+      </div>
+    </div>
+    <div class="data-table-pagination">
+      <span class="data-table-pagination-label">1-5 of 10</span>
+      <a href="#" class="link disabled">
+        <i class="icon icon-prev color-gray"></i>
+      </a>
+      <a href="#" class="link">
+        <i class="icon icon-next color-gray"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+
+          </div>
+
+          <div class="col-50">
+             <div class="block block-strong">Other setting table</div>
+
+<div class="card data-table">
+  <table>
+    <thead>
+      <tr>
+        <th class="label-cell">Dessert (100g serving)</th>
+        <th class="numeric-cell">Calories</th>
+        <th class="numeric-cell">Fat (g)</th>
+        <th class="numeric-cell">Carbs</th>
+        <th class="numeric-cell">Protein (g)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="label-cell">Frozen yogurt</td>
+        <td class="numeric-cell">159</td>
+        <td class="numeric-cell">6.0</td>
+        <td class="numeric-cell">24</td>
+        <td class="numeric-cell">4.0</td>
+      </tr>
+     <tr>
+        <td class="label-cell">Frozen yogurt</td>
+        <td class="numeric-cell">159</td>
+        <td class="numeric-cell">6.0</td>
+        <td class="numeric-cell">24</td>
+        <td class="numeric-cell">4.0</td>
+      </tr>
+      <tr>
+        <td class="label-cell">Frozen yogurt</td>
+        <td class="numeric-cell">159</td>
+        <td class="numeric-cell">6.0</td>
+        <td class="numeric-cell">24</td>
+        <td class="numeric-cell">4.0</td>
+      </tr>
+      <tr>
+        <td class="label-cell">Frozen yogurt</td>
+        <td class="numeric-cell">159</td>
+        <td class="numeric-cell">6.0</td>
+        <td class="numeric-cell">24</td>
+        <td class="numeric-cell">4.0</td>
+      </tr>
+      <tr>
+        <td class="label-cell">Frozen yogurt</td>
+        <td class="numeric-cell">159</td>
+        <td class="numeric-cell">6.0</td>
+        <td class="numeric-cell">24</td>
+        <td class="numeric-cell">4.0</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="data-table-footer">
+    <div class="data-table-rows-select">
+      Per page:
+      <div class="input input-dropdown">
+        <select>
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="all">All</option>
+        </select>
+      </div>
+    </div>
+    <div class="data-table-pagination">
+      <span class="data-table-pagination-label">1-5 of 10</span>
+      <a href="#" class="link disabled">
+        <i class="icon icon-prev color-gray"></i>
+      </a>
+      <a href="#" class="link">
+        <i class="icon icon-next color-gray"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+          </div>
+
+        </div>  
+
+
+
+
+    </div>
+                    
+
+</div>
+
+
+ 
+
+
+</div>
+
+</template>
+<style>
+  p {
+    margin: 10px 0;
+  }
+  .dollar{
+
+    font-size: 55px;
+  }
+</style>
+<script>
+  return {
+    // Lifecycle Hooks
+    beforeCreate() {
+      console.log('componentBeforeCreate', this)
+    },
+    created() {
+      console.log('componentCreated', this)
+    },
+    beforeMount() {
+      console.log('componentBeforeMount', this)
+    },
+    mounted() {
+      console.log('componentMounted', this);
+    },
+    beforeDestroy() {
+      console.log('componentBeforeDestroy', this);
+    },
+    destroyed() {
+      console.log('componentDestroyed', this);
+    },
+    // Component Data
+    data: function () {
+      // Must return an object
+      return {
+        name: 'Jimmy',
+        age: 25,
+        like: ['Tomato', 'Pasta', 'Deodorant'],
+        lastbuy: ['Tomato', 'Pasta', 'Deodorant'],
+        wishlist: ['Tomato', 'Pasta', 'Deodorant'],
+        shoppingchart: ['Tomato', 'Pasta', 'Deodorant'],
+        moneyearned: 100,
+        balance: 1569,
+
+      }
+    },
+    // Component Methods
+    methods: {
+      openAlert: function () {
+        var self = this;
+        self.$app.dialog.alert('Data Updated');
+      },
+    },
+    // Page Events
+    on: {
+      pageMounted: function(e, page) {
+        console.log('pageMounted', page);
+      },
+      pageInit: function(e, page) {
+        console.log('pageInit', page);
+      },
+      pageBeforeIn: function(e, page) {
+        console.log('pageBeforeIn', page);
+      },
+      pageAfterIn: function(e, page) {
+        console.log('pageAfterIn', page);
+      },
+      pageBeforeOut: function(e, page) {
+        console.log('pageBeforeOut', page);
+      },
+      pageAfterOut: function(e, page) {
+        console.log('pageAfterOut', page);
+      },
+      pageBeforeRemove: function(e, page) {
+        console.log('pageBeforeRemove', page);
+      },
+    }
+  }
+</script>

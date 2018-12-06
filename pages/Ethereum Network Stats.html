@@ -1,0 +1,121 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title">Ethereum Network Stats</div>
+      
+      </div>
+
+
+    </div>
+    <div class="page-content">
+
+       
+
+
+      <div class="block block-strong">
+        <p>This is a visual interface for tracking ethereum network status. It uses WebSockets to receive stats from running nodes and output them through an angular interface. It is the front-end implementation for eth-net-intelligence-api.</p>
+        <p>https://github.com/cubedro/eth-netstats</p>
+        <p>It is useful to use Component page when you need page-specific logic.</p>
+      </div>
+    
+      <div class="block block-strong">
+         <div class="block-title">Ethereum page</div>
+        <img src="img/screenshot-eth-dashboard.jpg" width="100%">
+
+
+      </div>
+
+
+      <div class="block block-strong">
+         
+      <a href="#" class="button button-raised" @click="openAlert">Visit Ethereum Blockchain</a>
+      </div>
+     
+    </div>
+  </div>
+</template>
+<style>
+  p {
+    margin: 10px 0;
+  }
+  .dollar{
+
+    font-size: 55px;
+  }
+</style>
+<script>
+  return {
+    // Lifecycle Hooks
+    beforeCreate() {
+      console.log('componentBeforeCreate', this)
+    },
+    created() {
+      console.log('componentCreated', this)
+    },
+    beforeMount() {
+      console.log('componentBeforeMount', this)
+    },
+    mounted() {
+      console.log('componentMounted', this);
+    },
+    beforeDestroy() {
+      console.log('componentBeforeDestroy', this);
+    },
+    destroyed() {
+      console.log('componentDestroyed', this);
+    },
+    // Component Data
+    data: function () {
+      // Must return an object
+      return {
+        name: 'Jimmy',
+        age: 25,
+        like: ['Tomato', 'Pasta', 'Deodorant'],
+        lastbuy: ['Tomato', 'Pasta', 'Deodorant'],
+        wishlist: ['Tomato', 'Pasta', 'Deodorant'],
+        shoppingchart: ['Tomato', 'Pasta', 'Deodorant'],
+        moneyearned: 100,
+        balance: 1569,
+
+      }
+    },
+    // Component Methods
+    methods: {
+      openAlert: function () {
+        var self = this;
+        self.$app.dialog.alert('Loading Ethereum page');
+      },
+    },
+    // Page Events
+    on: {
+      pageMounted: function(e, page) {
+        console.log('pageMounted', page);
+      },
+      pageInit: function(e, page) {
+        console.log('pageInit', page);
+      },
+      pageBeforeIn: function(e, page) {
+        console.log('pageBeforeIn', page);
+      },
+      pageAfterIn: function(e, page) {
+        console.log('pageAfterIn', page);
+      },
+      pageBeforeOut: function(e, page) {
+        console.log('pageBeforeOut', page);
+      },
+      pageAfterOut: function(e, page) {
+        console.log('pageAfterOut', page);
+      },
+      pageBeforeRemove: function(e, page) {
+        console.log('pageBeforeRemove', page);
+      },
+    }
+  }
+</script>

@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!--
+  Customize this policy to fit your own app's needs. For more guidance, see:
+      https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+  Some notes:
+      * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+      * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+      * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+          * Enable inline JS: add 'unsafe-inline' to default-src
+  -->
+  <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap: content:">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#2196f3">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>QUIPO APP</title>
+
+  <link rel="stylesheet" href="framework7/css/framework7.min.css">
+  <link rel="stylesheet" href="css/icons.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/shopping.css">
+  <link href="css/ticker-style.css" rel="stylesheet" type="text/css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="js/jquery.ticker.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+   integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+   crossorigin=""/>
+
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+   integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+   crossorigin=""></script>
+
+<script src="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.js"></script>
+<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.4.1/firebaseui.css" />
+
+<script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>
+
+
+
+
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBiDlRrZvA8O1l5N1r_8Rk9F8WAaRll2co",
+    authDomain: "quipu-app.firebaseapp.com",
+    databaseURL: "https://quipu-app.firebaseio.com",
+    projectId: "quipu-app",
+    storageBucket: "quipu-app.appspot.com",
+    messagingSenderId: "852874854968"
+  };
+  firebase.initializeApp(config);
+</script>
+
+<script type="text/javascript">
+      initApp = function() {
+        firebase.auth().onAuthStateChanged(function(user) {
+          if (user) {
+            // User is signed in.
+            var displayName = user.displayName;
+            var email = user.email;
+            var emailVerified = user.emailVerified;
+            var photoURL = user.photoURL;
+            var uid = user.uid;
+            var phoneNumber = user.phoneNumber;
+            var providerData = user.providerData;
+            user.getIdToken().then(function(accessToken) {
+              document.getElementById('sign-in-status').textContent = 'Signed in';
+              document.getElementById('sign-in').textContent = 'Sign out';
+              document.getElementById('account-details').textContent = JSON.stringify({
+                displayName: displayName,
+                email: email,
+                emailVerified: emailVerified,
+                phoneNumber: phoneNumber,
+                photoURL: photoURL,
+                uid: uid,
+                accessToken: accessToken,
+                providerData: providerData
+
+              }, null, '  ');
+              document.getElementById("account-displayName").innerHTML =  [user.displayName];
+              document.getElementById("userPhoto123").src = "[user.photoURL]";
+               var img = document.createElement("imguser");
+               img.src = "[user.photoURL]";
+               document.body.appendChild(img);
+            });
+          } else {
+            // User is signed out.
+            document.getElementById('sign-in-status').textContent = 'Signed out';
+            document.getElementById('sign-in').textContent = 'Sign in';
+            document.getElementById('account-displayName').textContent = 'null';
+            document.getElementById('account-details').textContent = 'null';
+          }
+        }, function(error) {
+          console.log(error);
+        });
+      };
+
+      window.addEventListener('load', function() {
+        initApp()
+      });
+    </script>
+
+
+</head>
+<body>
+  <div id="app">
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar"> 
+
+
+    </div>
+    <!-- Left panel with reveal effect when hidden -->
+    <div class="panel panel-left panel-reveal" >
+      <div class="view view-left" >
+        <div class="page" style="background-color: #1f79ba">
+          <div class="navbar">
+            <div class="navbar-inner sliding">
+              <div class="title">MENU</div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="block-title">
+                       
+              <img src="https://lh4.googleusercontent.com/-4znIEabFkpU/AAAAAAAAAAI/AAAAAAAABQ4/pLiFBz27qjA/photo.jpg" height="100px" style=" border-radius: 50%;">
+
+                  </div>
+                <div class="block-title">
+             <p> <p>Hello,  </p><b><div id="account-displayName"></b></div></p>
+              
+              <div id="sign-in-status" style="display: none;"></div>
+    <div id="sign-in" style="display: none;"></div>
+    <div id="account-details" style="display: none;" ></div>
+   
+        </div>
+           
+            <div class="block-title">Main View</div>
+            <div class="list links-list">
+              <ul>
+                <li>
+                  <a href="/page-loader-balance/:user/:userId/:posts/:postId/" data-view=".view-main" class="panel-close"> <i class="f7-icons">card_fill</i>BALANCE</a>
+                </li>
+                
+                <li>
+                  <a href="/product/" data-view=".view-main" class="back"> <i class="f7-icons">bag_fill</i>PRODUCTS</a>
+                </li>
+                
+
+                <li>
+                  <a href="/chat/" data-view=".view-main" class="back"> <i class="f7-icons">chat_fill</i>CHAT</a>
+                </li>
+
+               <li>
+                  <a href="/form/" data-view=".view-main" class="back"> <i class="f7-icons">list_fill</i>SETTINGS </a>
+                </li>
+              
+            
+                <li>
+                  <a href="/qrcode/" data-view=".view-main" class="back"> <i class="f7-icons">gear_fill</i>QR-CODE ID </a>
+                </li>
+
+
+
+
+                <li>
+                  <a href="/Ethereum Network Stats/:user/:userId/:posts/:postId/" data-view=".view-main" class="panel-close"> <i class="f7-icons">world_fill</i>Ethereum Admin</a>
+                </li>
+                
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Right panel with cover effect   -->
+      <div class="panel panel-right panel-cover theme-dark">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-inner">
+              <div class="title">Start and Create</div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="block">Quipu creation panel</div>
+             <div class="card demo-card-header-pic">
+            <div style="" class="card-header align-items-flex-end">
+              <img src="img/product/product 1.jpg" style="width: 100%;">
+           </div>
+            <div class="card-content card-content-padding">
+              <p class="date">Posted on January 21, 2015</p>
+              <p>Quisque eget vestibulum nulla. Quisque quis dui quis ex ultricies efficitur vitae non felis. Phasellus quis nibh hendrerit...</p>
+            </div>
+           <div class="card-footer"><a href="#" class="link"><i class="f7-icons">bookmark</i><i class="f7-icons">heart</i></a><a href="#" class="link">Add to chart</a></div>
+          </div>
+          <br>
+          <br>
+          <div class="card demo-card-header-pic">
+            <div  class="card-header align-items-flex-end">
+              <img src="img/product/product 2.jpg" style="width: 100%;">
+
+            </div>
+            <div class="card-content card-content-padding">
+              <p class="date">Posted on January 21, 2015</p>
+              <p>Quisque eget vestibulum nulla. Quisque quis dui quis ex ultricies efficitur vitae non felis. Phasellus quis nibh hendrerit...</p>
+            </div>
+            <div class="card-footer"><a href="#" class="link"><i class="f7-icons">bookmark</i><i class="f7-icons">heart</i></a></a><a href="#" class="link">Add to chart</a></div>
+          </div>
+
+          <br>
+          <br>
+
+           <div class="card demo-card-header-pic">
+            <div  class="card-header align-items-flex-end">
+              
+              <img src="img/product/product 3.jpg" style="width: 100%;">
+           
+            </div>
+            <div class="card-content card-content-padding">
+              <p class="date">Posted on January 21, 2015</p>
+              <p>Quisque eget vestibulum nulla. Quisque quis dui quis ex ultricies efficitur vitae non felis. Phasellus quis nibh hendrerit...</p>
+            </div>
+            <div class="card-footer"><a href="#" class="link"><i class="f7-icons">bookmark</i><i class="f7-icons">heart</i></a></a><a href="#" class="link">Add to chart</a></div>
+          </div>
+
+          <br>
+          <br>
+
+          <div class="card demo-card-header-pic">
+            <div  class="card-header align-items-flex-end"> 
+              <img src="img/product/product 4.jpg" style="width: 100%;">
+            </div>
+            <div class="card-content card-content-padding">
+              <p class="date">Posted on January 21, 2015</p>
+              <p>Quisque eget vestibulum nulla. Quisque quis dui quis ex ultricies efficitur vitae non felis. Phasellus quis nibh hendrerit...</p>
+            </div>
+            <div class="card-footer"><a href="#" class="link"><i class="f7-icons">bookmark</i><i class="f7-icons">heart</i></a></a><a href="#" class="link">Add to chart</a></div>
+          </div>
+<br>
+          <br>
+
+  <div class="card demo-card-header-pic">
+            <div  class="card-header align-items-flex-end"> 
+              <img src="img/product/product 5.jpg" style="width: 100%;">
+
+            </div>
+            <div class="card-content card-content-padding">
+              <p class="date">Posted on January 21, 2015</p>
+              <p>Quisque eget vestibulum nulla. Quisque quis dui quis ex ultricies efficitur vitae non felis. Phasellus quis nibh hendrerit...</p>
+            </div>
+            <div class="card-footer"><a href="#" class="link"><i class="f7-icons">bookmark</i><i class="f7-icons">heart</i></a></a><a href="#" class="link">Add to chart</a></div>
+          </div>
+          <br>
+          <br>
+          <div class="card demo-card-header-pic">
+            <div  class="card-header align-items-flex-end">
+              
+               <img src="img/product/product 6.jpg" style="width: 100%;">
+
+            </div>
+            <div class="card-content card-content-padding">
+              <p class="date">Posted on January 21, 2015</p>
+              <p>Quisque eget vestibulum nulla. Quisque quis dui quis ex ultricies efficitur vitae non felis. Phasellus quis nibh hendrerit...</p>
+            </div>
+            <div class="card-footer"><a href="#" class="link"><i class="f7-icons">bookmark</i><i class="f7-icons">heart</i></a></a><a href="#" class="link">Add to chart</a></div>
+          </div>
+
+
+
+
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Your main view, should have "view-main" class -->
+    <div class="view view-main ios-edges">
+      <!-- Page, data-name contains page name which can be used in callbacks -->
+      <div class="page" data-name="home">
+        <!-- Top Navbar -->
+        <div class="navbar">
+          <div class="navbar-inner">
+            <div class="left">
+              <a href="#" class="link icon-only panel-open" data-panel="left">
+                <i class="icon f7-icons ios-only">menu</i>
+                <i class="icon material-icons md-only">menu</i>
+              </a>
+            </div>
+            <div class="title sliding">QUIPO APP</div>
+            <div class="right">
+             <!-- <a href="#" class="link icon-only panel-open" data-panel="right">
+                <i class="icon f7-icons ios-only">menu</i>
+                <i class="icon material-icons md-only">menu</i>
+              </a>-->
+            </div>
+          </div>
+        </div>
+        <!-- Toolbar-->
+        <div class="toolbar">
+          <div class="toolbar-inner">
+           <div class="row">
+            <div class="col-30"></div>
+            <div class="col-30">
+              <ul id="js-news" class="js-hidden">
+                <li class="news-item"><a href="#" style="font-size: 25px; color:#676767">Notification 1</a></li>
+                 <li class="news-item"><a href="#" style="font-size: 25px; color:#676767">Notification 2</a></li>
+                <li class="news-item"><a href="#" style="font-size: 25px; color:#676767">Notification 3.</a></li>
+                <li class="news-item"><a href="#" style="font-size: 25px; color:#676767">Notification 3445.</a></li>
+             </ul>
+        </div>
+        <div class="col-30"></div>
+          </div>
+        </div>
+        </div>
+        <!-- Scrollable page content-->
+        <div class="page-content">
+
+          
+
+         <!-- 
+          <div class="block block-strong">
+            <p>This is an example of split view application layout, commonly used on tablets. The main approach of such kind of layout is that you can see different views at the same time.</p>
+
+            <p>Each view may have different layout, different navbar type (dynamic, fixed or static) or without navbar.</p>
+
+            <p>The fun thing is that you can easily control one view from another without any line of JavaScript just using "data-view" attribute on links.</p>
+          </div>
+
+          <div class="block-title">Navigation</div>
+          <div class="list">
+            <ul>
+              <li>
+                <a href="/about/" class="item-content item-link">
+                  <div class="item-inner">
+                    <div class="item-title">About</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="/form/" class="item-content item-link">
+                  <div class="item-inner">
+                    <div class="item-title">Form</div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="block-title">Modals</div>
+          <div class="block block-strong">
+            <div class="row">
+              <div class="col-50">
+                <a href="#" class="button button-raised button-fill popup-open" data-popup="#my-popup">Popup</a>
+              </div>
+              <div class="col-50">
+                <a href="#" class="button button-raised button-fill login-screen-open" data-login-screen="#my-login-screen">Login Screen</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="block-title">Panels</div>
+          <div class="block block-strong">
+            <div class="row">
+              <div class="col-50">
+                <a href="#" class="button button-raised button-fill panel-open" data-panel="left">Left Panel</a>
+              </div>
+              <div class="col-50">
+                <a href="#" class="button button-raised button-fill panel-open" data-panel="right">Right Panel</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="block-title searchbar-hide-on-search">Page Loaders & Router</div>
+          <div class="list links-list searchbar-hide-on-search">
+            <ul>
+              <li>
+                <a href="/page-loader-template7/vladimir/123/about-me/1/?start=0&end=30#top">Template7 Page</a>
+              </li>
+              <li>
+                <a href="/page-loader-component/vladimir/123/about-me/1/?start=0&end=30#top">Component Page</a>
+              </li>
+              <li>
+                <a href="/load-something-that-doesnt-exist/">Default Route (404)</a>
+              </li>
+              <li>
+                <a href="/request-and-load/user/123456/">Request Data & Load</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>-->
+
+    
+
+   <div id="mapid" style=" height:830px; "></div>
+
+
+  
+  
+
+<!-- Extended FAB Center Bottom (Red) -->
+  <div class="fab fab-extended fab-center-bottom color-red link panel-open" data-panel="right">
+    <a href="#">
+      <i class="icon f7-icons ios-only">add</i>
+      <i class="icon material-icons md-only">add</i>
+      <div class="fab-text">SHOP</div>
+    </a>
+
+    
+  </div>
+
+<!-- Extended FAB right top (blu) -->
+  <div class="fab fab-extended fab-right-top color-blue link panel-open" data-panel="right">
+    <a href="#">
+      <i class="icon f7-icons ios-only">add</i>
+      <i class="icon material-icons md-only">add</i>
+      <div class="fab-text">Near you</div>
+    </a>
+
+    
+  </div>
+
+<div class="fab fab-left-bottom">
+  <a href="#">
+    <!-- First icon is visible when Speed Dial actions are closed -->
+    <i class="icon f7-icons">add</i>
+    <!-- Second icon is visible when Speed Dial actions are opened -->
+    <i class="icon f7-icons">close</i>
+  </a>
+  <!-- Speed Dial action buttons -->
+  <div class="fab-buttons fab-buttons-right">
+    <a href="#"><i class="f7-icons">heart</i></a>
+    <a href="#"><i class="f7-icons">heart</i></a>
+    <a href="#"><i class="f7-icons">heart</i></a>
+  </div>
+</div>
+
+
+
+
+    </div>
+
+    <!-- Popup -->
+    <div class="popup" id="my-popup">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-inner">
+              <div class="title">Popup</div>
+              <div class="right">
+                <a href="#" class="link popup-close">Close</a>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="block">
+              <p>Popup content goes here.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Login Screen -->
+    <div class="login-screen" id="my-login-screen">
+      <div class="view">
+        <div class="page">
+          <div class="page-content login-screen-content">
+            <div class="login-screen-title">Login</div>
+            <div class="list">
+              <ul>
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <div class="item-title item-label">Username</div>
+                    <div class="item-input-wrap">
+                      <input type="text" name="username" placeholder="Your username">
+                    </div>
+                  </div>
+                </li>
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <div class="item-title item-label">Password</div>
+                    <div class="item-input-wrap">
+                      <input type="password" name="password" placeholder="Your password">
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="list">
+              <ul>
+                <li>
+                  <a href="#" class="item-link list-button login-button">Sign In</a>
+                </li>
+              </ul>
+              <div class="block-footer">Some text about login information.<br>Click "Sign In" to close Login Screen</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Cordova -->
+  <!--
+  <script src="cordova.js"></script>
+  -->
+
+<script>
+  return {
+    // Lifecycle Hooks
+    beforeCreate() {
+      console.log('componentBeforeCreate', this)
+    },
+    created() {
+      console.log('componentCreated', this)
+    },
+    beforeMount() {
+      console.log('componentBeforeMount', this)
+    },
+    mounted() {
+      console.log('componentMounted', this);
+    },
+    beforeDestroy() {
+      console.log('componentBeforeDestroy', this);
+    },
+    destroyed() {
+      console.log('componentDestroyed', this);
+    },
+    // Component Data
+    data: function () {
+      // Must return an object
+      return {
+        name: 'Jimmy',
+        age: 25,
+        like: ['Tomato', 'Pasta', 'Deodorant'],
+        lastbuy: ['Tomato', 'Pasta', 'Deodorant'],
+        wishlist: ['Tomato', 'Pasta', 'Deodorant'],
+        shoppingchart: ['Tomato', 'Pasta', 'Deodorant'],
+        moneyearned: 100,
+        balance: 1569,
+
+      }
+    },
+    // Component Methods
+    methods: {
+      openAlert: function () {
+        var self = this;
+        self.$app.dialog.alert('Hello World');
+      },
+    },
+    // Page Events
+    on: {
+      pageMounted: function(e, page) {
+        console.log('pageMounted', page);
+      },
+      pageInit: function(e, page) {
+        console.log('pageInit', page);
+      },
+      pageBeforeIn: function(e, page) {
+        console.log('pageBeforeIn', page);
+      },
+      pageAfterIn: function(e, page) {
+        console.log('pageAfterIn', page);
+      },
+      pageBeforeOut: function(e, page) {
+        console.log('pageBeforeOut', page);
+      },
+      pageAfterOut: function(e, page) {
+        console.log('pageAfterOut', page);
+      },
+      pageBeforeRemove: function(e, page) {
+        console.log('pageBeforeRemove', page);
+      },
+    }
+  }
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#js-news').ticker();
+        
+    });
+</script>
+
+<script type="text/javascript">
+  
+var mymap = L.map('mapid').setView([11.010482,  -74.807015], 15);
+
+L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox.streets',
+    accessToken: 'pk.eyJ1IjoiZWJpYW5jaGkiLCJhIjoiY2pnZm9ncmVzMHZvMzJ3bXJoMjVnOWM4MSJ9.51X1Nv9D7dorZKjJGGxA3g'
+}).addTo(mymap);
+
+var marker = L.marker([11.010482, -74.807015]).addTo(mymap);
+var marker2 = L.marker([11.011460, -74.808189]).addTo(mymap);
+ marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
+ marker2.bindPopup("<b>Hello world!</b><br>I am a popup. ").openPopup();
+
+
+
+function onMapClick(e) {
+    alert("You clicked the map at " + e.latlng);
+}
+
+mymap.on('click', onMapClick);
+
+
+</script>
+
+  <!-- Framework7 library -->
+  <script src="framework7/js/framework7.min.js"></script>
+
+  <!-- App routes -->
+  <script src="js/routes.js"></script>
+
+  <!-- Your custom app scripts -->
+  <script src="js/app.js"></script>
+
+  <!-- Your custom app scripts -->
+  <script src="js/shopping.js"></script>
+
+
+
+</body>
+</html>
